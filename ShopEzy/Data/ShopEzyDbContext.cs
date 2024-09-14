@@ -10,7 +10,10 @@ namespace ShopEzy.Data
 
         }
 
-        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Customer> Customer { get; set; }
+        public DbSet<Product> Product { get; set; } = default!;
+        public DbSet<Transaction> Transaction { get; set; }
+
 
     
     }

@@ -35,10 +35,10 @@ namespace ShopEzy.Models
             Address = address;
             Password = password;
         }
-
-        public override string? ToString()
+        
+        public override string ToString()
         {
-            return base.ToString();
+            return $"{Id} - {FirstName} {LastName} - {Email} - {PhoneNumber} - {DateOfBirth} - {Address}";
         }
     }
 }
