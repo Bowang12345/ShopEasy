@@ -1,0 +1,93 @@
+﻿@model IEnumerable<ShopEzy.Models.Product>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>ShopEzy</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <input type="text" id="searchInput" class="form-control" placeholder="Search by name...">
+    </div>
+    <div class="col-md-6 text-right">
+        <button id="sortByName" class="btn btn-primary">Sort by Name</button>
+        <button id="sortByPrice" class="btn btn-primary">Sort by Price</button>
+    </div>
+</div>
+
+<table class="table" id="productTable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // 搜索功能
+            $('#searchInput').on('keyup', function () {
+                var value = $(this).val().toLowerCase();
+                $('#productTable tbody tr').filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+
+            // 按名称排序
+            $('#sortByName').click(function () {
+                var rows = $('#productTable tbody tr').get();
+                rows.sort(function (a, b) {
+                    var A = $(a).children('td').eq(0).text().toUpperCase();
+                    var B = $(b).children('td').eq(0).text().toUpperCase();
+                    return (A < B) ? -1 : (A > B) ? 1 : 0;
+                });
+                $.each(rows, function (index, row) {
+                    $('#productTable').children('tbody').append(row);
+                });
+            });
+
+            // 按价格排序
+            $('#sortByPrice').click(function () {
+                var rows = $('#productTable tbody tr').get();
+                rows.sort(function (a, b) {
+                    var A = parseFloat($(a).children('td').eq(2).text());
+                    var B = parseFloat($(b).children('td').eq(2).text());
+                    return (A < B) ? -1 : (A > B) ? 1 : 0;
+                });
+                $.each(rows, function (index, row) {
+                    $('#productTable').children('tbody').append(row);
+                });
+            });
+        });
+    </script>
+}
