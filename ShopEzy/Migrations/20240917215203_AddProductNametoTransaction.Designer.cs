@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShopEzy.Data;
 
@@ -11,9 +12,11 @@ using ShopEzy.Data;
 namespace ShopEzy.Migrations
 {
     [DbContext(typeof(ShopEzyDbContext))]
-    partial class ShopEzyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240917215203_AddProductNametoTransaction")]
+    partial class AddProductNametoTransaction
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

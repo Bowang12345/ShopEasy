@@ -14,6 +14,9 @@ namespace ShopEzy.Models
         public int ProductId { get; set; }
 
         [Required]
+        public string ProductName { get; set; }
+
+        [Required]
         public int Quantity { get; set; }
 
         [Required]
@@ -27,10 +30,11 @@ namespace ShopEzy.Models
         {
         }
 
-        public Transaction(int customerId, int productId, int quantity, decimal price, DateTime date)
+        public Transaction(int customerId, int productId,string productName, int quantity, decimal price, DateTime date)
         {
             CustomerId = customerId;
             ProductId = productId;
+            ProductName = productName;
             Quantity = quantity;
             Price = price;
             Date = date;
@@ -38,7 +42,7 @@ namespace ShopEzy.Models
 
         public override string ToString()
         {
-            return $"Transaction Id: {Id}, Customer Id: {CustomerId}, Product Id: {ProductId}, Quantity: {Quantity}, Price: {Price}, Date: {Date}";
+            return $"Transaction Id: {Id}, Customer Id: {CustomerId}, Product Id: {ProductId}, Product Name: {ProductName}, Quantity: {Quantity}, Price: {Price}, Date: {Date}";
         }
     }
 }

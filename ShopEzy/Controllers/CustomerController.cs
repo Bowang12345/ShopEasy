@@ -105,20 +105,29 @@ namespace ShopEzy.Controllers
             }
 
             // save user 
-            _dbContext.Customer.Add(new Customer() 
-                                    {   FirstName = firstname, 
-                                        LastName = lastname,
-                                        Email = email,
-                                        PhoneNumber = phonenumber,
-                                        DateOfBirth = dateofbirth,
-                                        Address = address,
-                                        Password = password });
-            _dbContext.SaveChanges();
+            CreateCustomer(firstname, lastname, email, phonenumber, dateofbirth, address, password);
 
             // set success message
             TempData["SuccessMessage"] = "Registration successful!";
 
             return RedirectToAction("Login");
+        }
+
+        public int CreateCustomer(string firstname, string lastname, string email, string phonenumber, DateTime dateofbirth, string address, string password)
+        {
+            _dbContext.Customer.Add(new Customer()
+            {
+                FirstName = firstname,
+                LastName = lastname,
+                Email = email,
+                PhoneNumber = phonenumber,
+                DateOfBirth = dateofbirth,
+                Address = address,
+                Password = password
+            });
+            int result = _dbContext.SaveChanges();
+
+            return result;
         }
 
         [HttpGet]
