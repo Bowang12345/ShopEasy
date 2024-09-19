@@ -14,124 +14,75 @@ namespace ShopEzy.Controllers
     public class CustomerUnitTestController : Controller
     {
 
-        private readonly Mock<CustomerController> _controller;
+        private static List<Customer> customerList = [];   
 
         public CustomerUnitTestController()
         {
-            _controller = new Mock<CustomerController>();
-        }
-
-        //get a customer info 
-        public Customer GetCustomer() 
-        {
-
-            Customer customer = new Customer(1,"John", "Doe", "test@email.com", "1234567890", DateTime.Now, "street","1234567890");
-
-            return customer;
+            if (customerList.Count == 0) 
+            {
+                //create a list of customers
+                customerList.Add(new Customer(1, "John", "Doe", "test1@email.com", "1234567890", DateTime.Now, "street", "1234567890"));
+                customerList.Add(new Customer(2, "Jane", "Doe", "test2@email.com", "1234567890", DateTime.Now, "street", "1234567890"));
+                customerList.Add(new Customer(3, "Bob", "Smith", "test3@email.com", "1234567890", DateTime.Now, "street", "1234567890"));
+                customerList.Add(new Customer(4, "Alice", "Johnson", "test4@email.com", "1234567890", DateTime.Now, "street", "1234567890"));
+            }
         }
 
         public IActionResult Index()
         {
-            Customer customer = GetCustomer();
-            return View(customer);
+            return View(customerList);
         }
 
-        public IActionResult? Login(string email, string password)
+        public IActionResult Login()
         {
-            Customer customer = GetCustomer();
-            if (customer.Email == email && customer.Password == password)
-            { 
-                return View("Index", customer);
-            }
-            else
-            {
-                return null;
-            }
             
+            //get customer info
+            var customer = customerList.FirstOrDefault();
+            return View(customer);
+
+
         }
 
-        public IActionResult? Register(Customer customer,string confirmPassword)
+        public IActionResult Register()
         {
-            //validate fields
-            if (string.IsNullOrEmpty(customer.FirstName))
-            {
-                return null;
-            }
-            if (string.IsNullOrEmpty(customer.LastName))
-            {
-                return null;
-            }
-            if (string.IsNullOrEmpty(customer.Email))
-            {
-                return null;
-            }
-            if (string.IsNullOrEmpty(customer.PhoneNumber))
-            {
-                return null;
-            }
-            if (string.IsNullOrEmpty(customer.Address))
-            {
-                return null;
-            }
-            if (string.IsNullOrEmpty(customer.Password))
-            {
-                return null;
-            }
-            if (string.IsNullOrEmpty(confirmPassword))
-            {
-                return null;
-            }
+            //create a new customer
+            Random random = new Random();
+            Customer customer = new Customer();
+            customer.Id = random.Next(1, 1000);
+            customer.FirstName = "John"+ random.Next(1, 100);
+            customer.LastName = "Doe" + random.Next(1, 100);
+            customer.Email = "test" + random.Next(50, 100)+"@email.com";
+            customer.PhoneNumber = "1234567890";
+            customer.DateOfBirth = DateTime.Now;
+            customer.Address = "street" + random.Next(1, 100);
+            customer.Password = "1234567890";
 
-            // match passwords
-            if (customer.Password != confirmPassword)
-            {
-                return null;
-            }
-           
-            //IActionResult actionResult = _controller.Register(customer.FirstName, customer.LastName, customer.Email, customer.PhoneNumber, customer.DateOfBirth,customer.Address, customer.Password,confirmPassword);
-            /*if (result == null)
-            {
-                return null;
-            }*/
-            return View("Index", customer);
+            customerList.Add(customer);
+            return View("Index", customerList);
         }
 
 
-        public IActionResult? Update(Customer customer)
+        [HttpGet]
+        public IActionResult Update()
         {
-            //validate fields
-            if (string.IsNullOrEmpty(customer.FirstName))
-            {
-                return null;
-            }
-            if (string.IsNullOrEmpty(customer.LastName))
-            {
-                return null;
-            }
-            if (string.IsNullOrEmpty(customer.Email))
-            {
-                return null;
-            }
-            if (string.IsNullOrEmpty(customer.PhoneNumber))
-            {
-                return null;
-            }
-            if (string.IsNullOrEmpty(customer.Address))
-            {
-                return null;
-            }
-            if (string.IsNullOrEmpty(customer.Password))
-            {
-                return null;
-            }
-            // update customer info
-
-
-
-
-            return View("Index", customer);
+            var customer = customerList.FirstOrDefault();
+            return View(customer);
 
         }
 
+
+        [HttpPost]
+        public IActionResult Update(Customer customer)
+        {
+            var macthCustomer = customerList.FirstOrDefault(c => c.Id == customer.Id);
+            macthCustomer.FirstName = customer.FirstName;
+            macthCustomer.LastName = customer.LastName;
+            macthCustomer.PhoneNumber = customer.PhoneNumber;
+            macthCustomer.DateOfBirth = customer.DateOfBirth;
+            macthCustomer.Address = customer.Address;
+            macthCustomer.Password = customer.Password;
+            return View();
+
+        }
     }
 }
