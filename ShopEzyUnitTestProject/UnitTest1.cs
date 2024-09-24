@@ -70,6 +70,30 @@ namespace ShopEzyUnitTestProject
             Assert.IsNotNull(result);
         }
 
+        [TestMethod]
+        public void TestSearchMethod()
+        {
+            ProductUnitTestController productUnitTestController = new ProductUnitTestController();
+            IActionResult result = productUnitTestController.SearchName() as IActionResult;
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void TestSortByNameMethod()
+        {
+            ProductUnitTestController productUnitTestController = new ProductUnitTestController();
+            IActionResult result = productUnitTestController.SortByName() as IActionResult;
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void TestSortByPriceMethod()
+        {
+            ProductUnitTestController productUnitTestController = new ProductUnitTestController();
+            IActionResult result = productUnitTestController.SortByPrice() as IActionResult;
+            Assert.IsNotNull(result);
+        }
+
 
 
     }//end of product controller test class
