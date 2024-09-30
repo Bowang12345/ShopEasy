@@ -53,7 +53,7 @@ namespace ShopEzy.Controllers
         public IActionResult SearchName()
         {
             List<Product> productList = GetProductList();
-            var result = productList.Where(p => p.Name.Contains("1"));
+            var result = productList.Where(p => p.Name != null && p.Name.Contains("1"));
 
             return View("Index", result);
         }

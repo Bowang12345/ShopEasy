@@ -41,7 +41,7 @@ namespace ShopEzy.Controllers
             // Apply search filter if provided
             if (!string.IsNullOrEmpty(SearchName))
             {
-                products = products.Where(p => p.Name.Contains(SearchName));
+                products = products.Where(p => p.Name != null && p.Name.Contains(SearchName));
             }
 
             // Apply sorting based on the sortOrder parameter

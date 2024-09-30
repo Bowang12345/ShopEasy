@@ -52,7 +52,7 @@ namespace ShopEzy.Controllers
 
         public IActionResult Create()
         {
-            Random random = new Random();
+            Random random = new();
             Transaction transaction = new Transaction
             {
                 Id = random.Next(1, 1000),
@@ -70,6 +70,10 @@ namespace ShopEzy.Controllers
         public IActionResult Delete(int id)
         {
             var transaction = transactions.FirstOrDefault(p => p.Id == id);
+            if (transaction == null)
+            {
+                return NotFound();
+            }
             transactions.Remove(transaction);
 
             return View("Index",transactions);

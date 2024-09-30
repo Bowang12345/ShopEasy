@@ -6,6 +6,7 @@ using Moq;
 using NuGet.ContentModel;
 using ShopEzy.Data;
 using ShopEzy.Models;
+using ShopEzy.utils;
 using System.Net;
 using Xunit;
 
@@ -46,7 +47,7 @@ namespace ShopEzy.Controllers
         public IActionResult Register()
         {
             //create a new customer
-            Random random = new Random();
+            Random random = new();
             Customer customer = new Customer();
             customer.Id = random.Next(1, 1000);
             customer.FirstName = "John"+ random.Next(1, 100);
@@ -75,6 +76,10 @@ namespace ShopEzy.Controllers
         public IActionResult Update(Customer customer)
         {
             var macthCustomer = customerList.FirstOrDefault(c => c.Id == customer.Id);
+            if (macthCustomer == null)
+            {
+                return NotFound();
+            }
             macthCustomer.FirstName = customer.FirstName;
             macthCustomer.LastName = customer.LastName;
             macthCustomer.PhoneNumber = customer.PhoneNumber;

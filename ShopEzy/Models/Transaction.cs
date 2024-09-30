@@ -14,7 +14,7 @@ namespace ShopEzy.Models
         public int ProductId { get; set; }
 
         [Required]
-        public string ProductName { get; set; }
+        public string? ProductName { get; set; }
 
         [Required]
         public int Quantity { get; set; }
